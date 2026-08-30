@@ -1,7 +1,7 @@
 import "./style.css";
 const API_KEY = import.meta.env.VITE_NASA_API_KEY;
 
-document.querySelector("#app").innerHTML = "<p>KuuppaTab intializing...</p>";
+document.querySelector("#app").innerHTML = "<p>Nasa section intializing...</p>";
 
 fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
 .then(response => response.json())
@@ -75,3 +75,20 @@ var currentTime = "";
       }
     }
     setInterval(timeUpdate, 1000);
+
+function doSearch(){
+    event.preventDefault()
+    const search = document.querySelector("#searchInput").value.trim()
+    if (search !== "") {
+        window.location.href =
+            `https://www.google.com/search?q=${encodeURIComponent(search)}`
+    }
+}
+
+document.querySelector("#searchBar").addEventListener("submit", function(event) {
+    doSearch();
+})
+
+document.querySelector("#searchButton").addEventListener("click", () => {
+    doSearch();
+})

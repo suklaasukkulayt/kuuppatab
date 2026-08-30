@@ -1,5 +1,5 @@
 body {
-    background-color: aqua;
+    background-color: rgb(0, 0, 0);
     min-height: 100%;
     position: relative;
     background-size: cover;
@@ -28,12 +28,15 @@ h1 {
 }
 
 #timetext {
-    position: fixed;
+    position: absolute;
     font-family: "Audiowide", sans-serif;
     background-color: aquamarine;
     width: fit-content;
-    top: 50px;
     right: 20px;
+    top: 0;
+    margin: 0;
+    font-size: 50px;
+    border-radius: 16px;
 }
 
 p {
@@ -48,4 +51,31 @@ p {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+#searchBar {
+    width: 650px;
+    max-width: 90%;
+    margin: 30px auto 0;
+}
+
+#searchInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 17px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+    transition: 0.3s;
+    background: rgba(27, 255, 171, 0.369);
+    color: rgb(255, 255, 255);
+    font-size: 17px;
+    outline: none;
+    backdrop-filter: blur(15px);
+}
+#searchInput::placeholder {
+    color: #00ffb7;
+}
+#searchInput:focus {
+    border-color: #00ffb7;
+    box-shadow: 0 0 20px #00ffb779;
 }
