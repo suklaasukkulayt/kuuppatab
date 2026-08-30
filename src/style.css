@@ -2,5 +2,34 @@ body {
     background-color: aqua;
     min-height: 100vh;
     position: relative;
-    margin: 0;
+}
+
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 30px;
+    width: 400px;
+    height: 100%;
+    background-color: firebrick;
+    z-index: -1;
+    clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+}
+
+h1 {
+    font-family: "Audiowide", sans-serif;
+}
+
+p {
+    font-family: "Quantico", sans-serif;
+}
+
+.nasamedia{
+    width: 500px;
+    height: 500px;
+    border-radius: 32px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -1,3 +1,4 @@
+import "./style.css";
 const API_KEY = import.meta.env.VITE_NASA_API_KEY;
 
 document.querySelector("#app").innerHTML = "<p>KuuppaTab intializing...</p>";
@@ -9,7 +10,7 @@ fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
     let media;
 
     if (data.media_type === "image") {
-        media = `<img src="${data.url}" style="width: 300px; height: 300px;"/>`;
+        media = `<img src="${data.url}" class="nasamedia"/>`;
     } else if (data.media_type === "video") {
         media = `<video src="${data.url}" controls style="width: 300px; height: 300px;"></video>`;
     } else if (data.url.includes("youtube")){
