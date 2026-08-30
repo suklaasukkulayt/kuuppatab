@@ -57,15 +57,13 @@ p {
     width: 650px;
     max-width: 90%;
     margin: 30px auto 0;
-    display:flex;
-    flex-direction:row;
+    position: relative;
 }
 
 #searchInput {
     width: 100%;
-    flex-grow: 2;
     box-sizing: border-box;
-    padding: 17px 22px;
+    padding: 17px 65px 17px 22px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 40px;
     transition: 0.3s;
@@ -81,4 +79,24 @@ p {
 #searchInput:focus {
     border-color: #00ffb7;
     box-shadow: 0 0 20px #00ffb779;
+}
+
+#searchButton {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 255, 183, 0.25);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#searchButton:hover {
+    transform: translateY(-50%) scale(1.08);
+    background: rgba(0, 255, 183, 0.45);
 }
