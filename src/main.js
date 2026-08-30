@@ -65,3 +65,13 @@ const images = data.collection.items
 .catch(err => {
     document.querySelector("#app").innerHTML = `<p>Error: ${err.message}</p>`;
 });
+
+var currentTime = "";
+      function timeUpdate() {
+      currentTime = new Date().toLocaleString([], {hour: '2-digit', minute:'2-digit'});
+      var timeText = document.querySelector("#timetext");
+     if (timeText) {
+        timeText.innerHTML = currentTime;
+      }
+    }
+    setInterval(timeUpdate, 1000);

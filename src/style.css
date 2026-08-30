@@ -27,6 +27,15 @@ h1 {
     background-color: aquamarine;
 }
 
+#timetext {
+    position: fixed;
+    font-family: "Audiowide", sans-serif;
+    background-color: aquamarine;
+    width: fit-content;
+    top: 50px;
+    right: 20px;
+}
+
 p {
     font-family: "Quantico", sans-serif;
     background-color: rgba(90, 20, 255, 0.507);
