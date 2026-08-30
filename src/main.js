@@ -3,10 +3,20 @@ const API_KEY = import.meta.env.VITE_NASA_API_KEY;
 
 document.querySelector("#app").innerHTML = "<p>Nasa section intializing...</p>";
 
+var currentTime = "";
+      function timeUpdate() {
+      currentTime = new Date().toLocaleString([], {hour: '2-digit', minute:'2-digit'});
+      var timeText = document.querySelector("#timetext");
+     if (timeText) {
+        timeText.innerHTML = currentTime;
+      }
+    }
+    setInterval(timeUpdate, 1000);
+
 fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
 .then(response => response.json())
 .then(data => {
-    
+    timeUpdate();
     let media;
     let backgroundUrl = data.url;
 
@@ -28,6 +38,7 @@ fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
 fetch(`https://images-api.nasa.gov/search?q=nebula&media_type=image&page_size=100`)
 .then(response => response.json())
 .then(async data => {
+    timeUpdate();
 const images = data.collection.items 
 .map(item => {
      const imageData = item.data?.[0];
@@ -66,15 +77,7 @@ const images = data.collection.items
     document.querySelector("#app").innerHTML = `<p>Error: ${err.message}</p>`;
 });
 
-var currentTime = "";
-      function timeUpdate() {
-      currentTime = new Date().toLocaleString([], {hour: '2-digit', minute:'2-digit'});
-      var timeText = document.querySelector("#timetext");
-     if (timeText) {
-        timeText.innerHTML = currentTime;
-      }
-    }
-    setInterval(timeUpdate, 1000);
+
 
 function doSearch(){
     event.preventDefault()
