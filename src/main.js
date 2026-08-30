@@ -27,26 +27,39 @@ fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
 })
 fetch(`https://images-api.nasa.gov/search?q=nebula&media_type=image&page_size=100`)
 .then(response => response.json())
-.then(data => {
+.then(async data => {
 const images = data.collection.items 
 .map(item => {
      const imageData = item.data?.[0];
-     const preview = item.links?.find(
-        link => link.render === "image"
-    );
+     const nasaId = imageData?.nasa_id;
+
     return {
+        id: nasaId,
         title: imageData?.title || "NASA Image",
-        description: imageData?.description || "",
-        url: preview?.href
+        description: imageData?.description || ""
     };
 })
-    .filter(image => image.url);
+    .filter(image => image.id);
 
     if (images.length === 0) {
-        throw new Error("No NASA images found."); }
+        throw new Error("No NASA images found.");
+    }
         const day = Math.floor(Date.now() / 86400000);
         const imageIndex = day % images.length;
         const selectedImage = images[imageIndex];
+        const assetResponse = await fetch(
+    `https://images-api.nasa.gov/asset/${selectedImage.id}`
+);
+    const assetData = await assetResponse.json();
+    const originalImage = assetData.collection.items.find(
+        item => item.href.includes("~orig")
+);
+
+    if (!originalImage) {
+        throw new Error("Original NASA image not found.");
+}
+
+    selectedImage.url = originalImage.href;
     document.body.style.backgroundImage = `url("${selectedImage.url}")`;
 })
 .catch(err => {
