@@ -95,3 +95,103 @@ document.querySelector("#searchBar").addEventListener("submit", function(event) 
 document.querySelector("#searchButton").addEventListener("click", () => {
     doSearch();
 })
+
+function weatherCodeToEmoji(code) {
+  const weatherIcons = {
+    0: "☀️",
+    1: "🌤️",
+    2: "⛅",
+    3: "☁️",
+    45: "🌫️",
+    48: "🌫️",
+    51: "🌦️",
+    61: "🌧️",
+    71: "🌨️",
+    95: "⛈️"
+  };
+
+  return weatherIcons[code] || "🌍";
+}
+
+async function getLocationName(lat, lon) {
+  const providers = [
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`,
+    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=10&accept-language=en`
+  ];
+
+  for (const url of providers) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        continue;
+      }
+
+      const data = await response.json();
+      const city = data.city || data.locality || data.address?.city || data.address?.town || data.address?.village || data.address?.suburb || "";
+      const region = data.principalSubdivision || data.address?.state || data.address?.county || "";
+      const country = data.countryName || data.address?.country || "";
+      const label = [city, region, country].filter(Boolean).join(", ");
+
+      if (label) {
+        return label;
+      }
+    } catch (error) {
+      console.warn("Could not resolve location name with provider", url, error);
+    }
+  }
+
+  return `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+}
+
+async function showWeather(lat, lon) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const temp = data.current.temperature_2m;
+    const code = data.current.weather_code;
+    const desc = weatherCodeToText(code);
+    const icon = weatherCodeToEmoji(code);
+    const locationName = await getLocationName(lat, lon);
+
+    const weatherIcon = document.querySelector("#weather-icon");
+
+    if (weatherIcon) {
+      weatherIcon.textContent = icon;
+    }
+
+    document.querySelector("#weathercontent").innerHTML = `
+      <p>${locationName || "Your location"}</p>
+      <p>${temp}°C</p>
+    `;
+  } catch {
+    document.querySelector("#weathercontent").innerHTML =
+      "<p>Weather could not be loaded.</p>";
+  }
+}
+
+function getUserWeather() {
+  if (!navigator.geolocation) {
+    document.querySelector("#weathercontent").innerHTML =
+      "<p>Geolocation is not supported by this browser.</p>";
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      showWeather(position.coords.latitude, position.coords.longitude);
+    },
+    () => {
+      document.querySelector("#weathercontent").innerHTML =
+        "<p>Location access was denied.</p>";
+    }
+  );
+}
+
+getUserWeather();
