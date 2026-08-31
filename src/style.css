@@ -157,3 +157,20 @@ p {
 ::-webkit-scrollbar-thumb:hover {
   background: #15eeb177; 
 }
+
+#weather-icon {
+    font-size: 40px;
+    line-height: 1;
+    margin: 8px 0;
+    position: absolute;
+    right: 250px;
+    top: 150px;
+}
+
+#weathercontent {
+    position: absolute;
+    background-color: aquamarine;
+    width: fit-content;
+    right: 20px;
+    top: 150px;
+}
