@@ -296,13 +296,13 @@ function openQuickLinkEditor(index = null) {
     const deleteButton = document.querySelector("#quickLinkDelete");
 
     if (index === null) {
-        title.textContent = "Add Quick Link";
+        title.textContent = "Add a bookmark";
         nameInput.value = "";
         urlInput.value = "";
         deleteButton.style.display = "none";
     } else {
         const link = quickLinks[index];
-        title.textContent = "Edit Quick Link";
+        title.textContent = "Edit your bookmark";
         nameInput.value = link.name;
         urlInput.value = link.url;
         deleteButton.style.display = "block";
