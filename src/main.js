@@ -1,4 +1,10 @@
 import "./style.css";
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/kuuppatab/sw.js");
+    });
+}
+
 const API_KEY = import.meta.env.VITE_NASA_API_KEY;
 
 document.querySelector("#app").innerHTML = "<p>Nasa section intializing...</p>";
