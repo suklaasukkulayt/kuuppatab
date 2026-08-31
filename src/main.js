@@ -156,7 +156,6 @@ async function showWeather(lat, lon) {
     const data = await response.json();
     const temp = data.current.temperature_2m;
     const code = data.current.weather_code;
-    const desc = weatherCodeToText(code);
     const icon = weatherCodeToEmoji(code);
     const locationName = await getLocationName(lat, lon);
 
@@ -195,3 +194,4 @@ function getUserWeather() {
 }
 
 getUserWeather();
+setInterval(getUserWeather, 10 * 60 * 1000);
