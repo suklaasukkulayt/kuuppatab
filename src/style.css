@@ -33,11 +33,25 @@ h1 {
     background-color: aquamarine;
     width: fit-content;
     right: 20px;
-    top: 0;
+    top: 70px;
     margin: 0;
     font-size: 50px;
     border-radius: 16px;
     transition: 0.5s;
+}
+
+#tabtext {
+    font-size: 50px;
+    width: fit-content;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    border-radius: 16px;
+    padding: 16px;
+    background-color: #21ffb981;
+    backdrop-filter: blur(30px);
+    font-family: "Silkscreen", sans-serif;
+    letter-spacing: -1px;
 }
 
 p {
