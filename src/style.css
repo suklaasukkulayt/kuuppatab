@@ -48,7 +48,7 @@ h1 {
     display: block;
     border-radius: 16px;
     padding: 16px;
-    background-color: #21ffb981;
+    background-color: rgba(90, 20, 255, 0.445);
     backdrop-filter: blur(30px);
     font-family: "Silkscreen", sans-serif;
     letter-spacing: -1px;
