@@ -24,9 +24,9 @@ fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
         media = `<img src="${data.url}" class="nasamedia"/>`;
 
     } else if (data.media_type === "video") {
-        media = `<video src="${data.url}" controls style="width: 300px; height: 300px;"></video>`;
+        media = `<video src="${data.url}" controls class="nasamedia"></video>`;
     } else if (data.url.includes("youtube")){
-        media = `<iframe width="300" height="300" src="${data.url}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></video>`;
+        media = `<iframe width="500" height="500" src="${data.url}" class="nasamedia" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></video>`;
     }
 
     document.querySelector("#app").innerHTML = `
