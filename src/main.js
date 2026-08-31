@@ -133,7 +133,7 @@ async function getLocationName(lat, lon) {
 
       const data = await response.json();
       const city = data.city || data.locality || data.address?.city || data.address?.town || data.address?.village || data.address?.suburb || "";
-      const region = data.principalSubdivision || data.address?.state || data.address?.county || "";
+      const region = "";
       const country = data.countryName || data.address?.country || "";
       const label = [city, region, country].filter(Boolean).join(", ");
 
@@ -166,8 +166,9 @@ async function showWeather(lat, lon) {
     }
 
     document.querySelector("#weathercontent").innerHTML = `
-      <p>${locationName || "Your location"}</p>
-      <p>${temp}°C</p>
+      <p class="weathertext">${temp}°C</p>
+      <p class="weathertext">${locationName || "Your location"}</p>
+
     `;
   } catch {
     document.querySelector("#weathercontent").innerHTML =

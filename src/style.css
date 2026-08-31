@@ -162,15 +162,21 @@ p {
     font-size: 40px;
     line-height: 1;
     margin: 8px 0;
-    position: absolute;
-    right: 250px;
-    top: 150px;
+    display: block;
 }
 
-#weathercontent {
+#iamweather {
     position: absolute;
     background-color: aquamarine;
     width: fit-content;
     right: 20px;
     top: 150px;
+    border-radius: 16px;
+    padding: 3px;
+    line-height: 0.3;
+    display: flex;
+}
+
+.weathertext {
+    background-color: rgba(255, 255, 255, 0);
 }
