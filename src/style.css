@@ -187,7 +187,7 @@ p {
     background-color: rgba(255, 255, 255, 0);
 }
 
-@media (max-width: 1315px) {
+@media (max-width: 1100px) {
     #iamweather {
         position: relative;
         right: auto;
@@ -206,4 +206,161 @@ p {
         position: relative;
         top: -100px;
     }
+}
+
+#quickLinks {
+    width: 650px;
+    max-width: 90%;
+    margin: 25px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 90px);
+    justify-content: center;
+    gap: 18px;
+}
+
+.quickLink {
+    position: relative;
+    width: 100px;
+    min-height: 20px;
+    border-radius: 20px;
+    padding: 5px;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: white;
+    background: rgba(27, 255, 171, 0.25);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s;
+}
+
+.quickLink:hover {
+    transform: translateY(-4px) scale(1.05);
+    background: rgba(27, 255, 171, 0.4);
+}
+
+.quickLinkIcon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.quickLinkName {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: "Quantico", sans-serif;
+    font-size: 14px;
+}
+
+.quickLinkEdit {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.75);
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.3s;
+} 
+.quickLinkEdit img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.quickLink:hover .quickLinkEdit {
+    opacity: 1;
+}
+
+.quickLinkAdd {
+    cursor: pointer;
+}
+
+.quickLinkAddIcon {
+    font-size: 38px;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.quickLinkMod {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 16, 15, 0.55);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+.quickLinkMod.open {
+    display: flex;
+    transition: 0.3s;
+}
+
+.quickLinkModContent {
+    width: 350px;
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 25px;
+    background: rgba(27, 104, 81, 0.85);
+    backdrop-filter: blur(25px);
+}
+
+.quickLinkModContent h2 {
+    font-family: "Quantico", sans-serif;
+    margin-top: 0;
+    color: rgb(123, 255, 0);
+}
+
+.quickLinkModContent input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 12px 15px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    outline: none;
+}
+
+.quickLinkModButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.quickLinkModButtons button,
+.quickLinkDelete {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    background-color: #00ffb7;
+}
+
+.quickLinkModButtons button {
+    flex: 1;
+}
+
+.quickLinkDelete {
+    width: 100%;
+    margin-top: 10px;
+    background: rgba(255, 60, 60, 0.7);
+    color: white;
 }

@@ -202,3 +202,179 @@ function getUserWeather() {
 
 getUserWeather();
 setInterval(getUserWeather, 10 * 60 * 1000);
+
+const QUICK_LINKS_KEY = "kuuppatab-quick-links";
+let quickLinks = JSON.parse(
+    localStorage.getItem(QUICK_LINKS_KEY) || "[]"
+);
+
+let editingQuickLinkIndex = null;
+function saveQuickLinks() {
+    localStorage.setItem(
+        QUICK_LINKS_KEY,
+        JSON.stringify(quickLinks)
+    );
+}
+
+function getFavicon(url) {
+    try {
+        const hostname = new URL(url).hostname;
+
+        return `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
+    } catch {
+        return "";
+    }
+}
+
+function renderQuickLinks() {
+    const container = document.querySelector("#quickLinks");
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+    quickLinks.forEach((link, index) => {
+        const item = document.createElement("div");
+        item.className = "quickLink";
+        const icon = document.createElement("img");
+        icon.className = "quickLinkIcon";
+        icon.src = link.icon || getFavicon(link.url);
+        icon.alt = "";
+        icon.onerror = () => {
+            icon.src = "";
+            icon.style.display = "none";
+        };
+
+        const name = document.createElement("div");
+        name.className = "quickLinkName";
+        name.textContent = link.name;
+        item.appendChild(icon);
+        item.appendChild(name);
+        item.addEventListener("click", () => {
+            window.location.href = link.url;
+        });
+
+        const editButton = document.createElement("button");
+        const editImage = document.createElement('img');
+        
+        editButton.appendChild(editImage);
+        editButton.className = "quickLinkEdit";
+        editButton.type = "button";
+        editImage.src = "./src/assets/edit.png";
+        editImage.alt = "✏️";
+        editButton.appendChild(editImage);
+
+        editButton.addEventListener("click", event => {
+            event.stopPropagation();
+            openQuickLinkEditor(index);
+        });
+        item.appendChild(editButton);
+        container.appendChild(item);
+    });
+
+    const addButton = document.createElement("div");
+    addButton.className = "quickLink";
+    addButton.classList.add("quickLinkAdd");
+    addButton.innerHTML = `
+        <div class="quickLinkAddIcon">+</div>
+        <div class="quickLinkName">Add</div>
+    `;
+    addButton.addEventListener("click", () => {
+        openQuickLinkEditor();
+    });
+
+    container.appendChild(addButton);
+}
+
+function openQuickLinkEditor(index = null) {
+    editingQuickLinkIndex = index;
+
+    const mod = document.querySelector("#quickLinkMod");
+    const title = document.querySelector("#quickLinkModTitle");
+    const nameInput = document.querySelector("#quickLinkName");
+    const urlInput = document.querySelector("#quickLinkUrl");
+    const deleteButton = document.querySelector("#quickLinkDelete");
+
+    if (index === null) {
+        title.textContent = "Add Quick Link";
+        nameInput.value = "";
+        urlInput.value = "";
+        deleteButton.style.display = "none";
+    } else {
+        const link = quickLinks[index];
+        title.textContent = "Edit Quick Link";
+        nameInput.value = link.name;
+        urlInput.value = link.url;
+        deleteButton.style.display = "block";
+    }
+
+    mod.classList.add("open");
+    nameInput.focus();
+}
+
+function closeQuickLinkEditor() {
+    document
+        .querySelector("#quickLinkMod")
+        .classList.remove("open");
+    editingQuickLinkIndex = null;
+}
+
+document
+    .querySelector("#quickLinkCancel")
+    .addEventListener("click", closeQuickLinkEditor);
+
+document
+    .querySelector("#quickLinkSave")
+    .addEventListener("click", () => {
+        const name = document
+            .querySelector("#quickLinkName")
+            .value
+            .trim();
+        const url = document
+            .querySelector("#quickLinkUrl")
+            .value
+            .trim();
+        const icon = document
+            .querySelector("#quickLinkIcon")
+            .value
+            .trim();
+        if (!name || !url) {
+            return;
+        }
+        const newLink = {
+            name,
+            url,
+            icon
+        };
+
+        if (editingQuickLinkIndex === null) {
+            quickLinks.push(newLink);
+        } else {
+            quickLinks[editingQuickLinkIndex] = newLink;
+        }
+        saveQuickLinks();
+        renderQuickLinks();
+        closeQuickLinkEditor();
+    });
+
+document
+    .querySelector("#quickLinkDelete")
+    .addEventListener("click", () => {
+        if (editingQuickLinkIndex === null) {
+            return;
+        }
+        quickLinks.splice(editingQuickLinkIndex, 1);
+        saveQuickLinks();
+        renderQuickLinks();
+        closeQuickLinkEditor();
+    });
+
+document
+    .querySelector("#quickLinkMod")
+    .addEventListener("click", event => {
+        if (event.target.id === "quickLinkMod") {
+            closeQuickLinkEditor();
+        }
+    });
+
+renderQuickLinks();

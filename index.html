@@ -22,6 +22,21 @@
         <input id="searchInput" type="text" placeholder="Search anything..." autocomplete="off"/>
         <button id="searchButton" type="submit"><img src="./src/assets/search.png" style="width: 50px; height: 40px; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%);"></button>
     </form>
+    <div id="quickLinks"></div>
+    <div id="quickLinkMod" class="quickLinkMod">
+    <div class="quickLinkModContent">
+        <h2 id="quickLinkModTitle">Add Quick Link</h2>
+        <input id="quickLinkName" type="text" placeholder="Name" autocomplete="off">
+
+        <input id="quickLinkUrl" type="url" placeholder="https://example.com" autocomplete="off">
+        <input id="quickLinkIcon" type="url" placeholder="https://example.com" autocomplete="off" style="display: none;">
+        <div class="quickLinkModButtons">
+            <button id="quickLinkCancel">Cancel</button>
+            <button id="quickLinkSave">Save</button>
+        </div>
+        <button id="quickLinkDelete" class="quickLinkDelete">Delete</button>
+    </div>
+</div>
     </div>
     
     <div id="app"></div>

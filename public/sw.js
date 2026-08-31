@@ -1,4 +1,4 @@
-const CACHE_NAME = "kuuppatab-v1";
+const CACHE_NAME = "kuuppatab-v2.1";
 
 const STATIC_FILES = [
     "/kuuppatab/",
