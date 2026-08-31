@@ -38,6 +38,7 @@ h1 {
     font-size: 50px;
     border-radius: 16px;
     transition: 0.5s;
+    padding: 2px;
 }
 
 #tabtext {
@@ -137,4 +138,22 @@ p {
 #searchButton:hover {
     transform: translateY(-50%) scale(1.08);
     background: rgba(0, 255, 183, 0.45);
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgba(27, 255, 171, 0.369); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #15eeb177; 
 }
