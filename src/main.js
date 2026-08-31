@@ -30,9 +30,9 @@ fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
     }
 
     document.querySelector("#app").innerHTML = `
-    <h1>${data.title}</h1>
+    <h1 id="nasatitle">${data.title}</h1>
     ${media}
-    <p>${data.explanation}</p>
+    <p id="nasadesc">${data.explanation}</p>
 `;
 })
 fetch(`https://images-api.nasa.gov/search?q=nebula&media_type=image&page_size=100`)
