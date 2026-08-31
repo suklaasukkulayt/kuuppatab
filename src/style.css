@@ -97,6 +97,16 @@ p {
     max-width: 90%;
     margin: 30px auto 0;
     position: relative;
+    transition: transform 0.3s;
+}
+
+#searchBar:focus-within {
+    transform: scale(1.2);
+}
+
+#searchInput:focus {
+    border-color: #00ffb7;
+    box-shadow: 0 0 20px #00ffb779;
 }
 
 #searchInput {
@@ -114,11 +124,6 @@ p {
 }
 #searchInput::placeholder {
     color: #00ffb7;
-}
-#searchInput:focus {
-    border-color: #00ffb7;
-    box-shadow: 0 0 20px #00ffb779;
-    transform: scale(1.2);
 }
 
 #searchButton {
