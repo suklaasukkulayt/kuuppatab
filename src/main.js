@@ -1,4 +1,5 @@
 import "./style.css";
+import editIcon from "./assets/edit.png";
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
         navigator.serviceWorker.register("/kuuppatab/sw.js");
@@ -258,7 +259,7 @@ function renderQuickLinks() {
         editButton.appendChild(editImage);
         editButton.className = "quickLinkEdit";
         editButton.type = "button";
-        editImage.src = "./assets/edit.png";
+        editImage.src = editIcon;
         editImage.alt = "✏️";
         editButton.appendChild(editImage);
 
