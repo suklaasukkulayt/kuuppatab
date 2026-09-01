@@ -164,7 +164,6 @@ async function showWeather(lat, lon) {
     const code = data.current.weather_code;
     const icon = weatherCodeToEmoji(code);
     const locationName = await getLocationName(lat, lon);
-
     const weatherIcon = document.querySelector("#weather-icon");
 
     if (weatherIcon) {
@@ -172,20 +171,20 @@ async function showWeather(lat, lon) {
     }
 
     document.querySelector("#weathercontent").innerHTML = `
-      <p class="weathertext">${temp}°C</p>
-      <p class="weathertext">${locationName || "Your location"}</p>
+      <p class="weathertext" style="font-size: 23px;">${temp}°C</p>
+      <p class="weathertext" style="font-size: 10px;">${locationName || "Your location"}</p>
 
     `;
   } catch {
     document.querySelector("#weathercontent").innerHTML =
-      "<p>Weather could not be loaded.</p>";
+      "<p class='weathertext'>Weather could not be loaded.</p>";
   }
 }
 
 function getUserWeather() {
   if (!navigator.geolocation) {
     document.querySelector("#weathercontent").innerHTML =
-      "<p>Geolocation is not supported by this browser.</p>";
+      "<p class='weathertext'>Geolocation is not supported by this browser.</p>";
     return;
   }
 
@@ -195,7 +194,7 @@ function getUserWeather() {
     },
     () => {
       document.querySelector("#weathercontent").innerHTML =
-        "<p>Location access was denied.</p>";
+        "<p class='weathertext'>Location access was denied.</p>";
     }
   );
 }
@@ -219,7 +218,6 @@ function saveQuickLinks() {
 function getFavicon(url) {
     try {
         const hostname = new URL(url).hostname;
-
         return `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
     } catch {
         return "";
@@ -293,6 +291,7 @@ function openQuickLinkEditor(index = null) {
     const title = document.querySelector("#quickLinkModTitle");
     const nameInput = document.querySelector("#quickLinkName");
     const urlInput = document.querySelector("#quickLinkUrl");
+    const iconInput = document.querySelector("#quickLinkIcon");
     const deleteButton = document.querySelector("#quickLinkDelete");
 
     if (index === null) {
@@ -300,22 +299,23 @@ function openQuickLinkEditor(index = null) {
         nameInput.value = "";
         urlInput.value = "";
         deleteButton.style.display = "none";
+        document.querySelector("#quickLinkIcon").style.display = "none";
     } else {
         const link = quickLinks[index];
         title.textContent = "Edit your bookmark";
         nameInput.value = link.name;
         urlInput.value = link.url;
+        iconInput.value = link.icon || "";
         deleteButton.style.display = "block";
+        document.querySelector("#quickLinkIcon").style.display = "flex";
     }
-
+    
     mod.classList.add("open");
     nameInput.focus();
 }
 
 function closeQuickLinkEditor() {
-    document
-        .querySelector("#quickLinkMod")
-        .classList.remove("open");
+    document.querySelector("#quickLinkMod").classList.remove("open");
     editingQuickLinkIndex = null;
 }
 
@@ -326,18 +326,9 @@ document
 document
     .querySelector("#quickLinkSave")
     .addEventListener("click", () => {
-        const name = document
-            .querySelector("#quickLinkName")
-            .value
-            .trim();
-        const url = document
-            .querySelector("#quickLinkUrl")
-            .value
-            .trim();
-        const icon = document
-            .querySelector("#quickLinkIcon")
-            .value
-            .trim();
+        const name = document.querySelector("#quickLinkName").value.trim();
+        const url = document.querySelector("#quickLinkUrl").value.trim();
+        const icon = document.querySelector("#quickLinkIcon").value.trim();
         if (!name || !url) {
             return;
         }

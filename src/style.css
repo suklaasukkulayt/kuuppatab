@@ -40,6 +40,9 @@ h1 {
     transition: 0.5s;
     padding: 2px;
 }
+#timetext:hover {
+    transform: scale(1.1);
+}
 
 #tabtext {
     font-size: 50px;
@@ -61,12 +64,13 @@ p {
 }
 
 .nasamedia{
-    width: 500px;
-    height: 500px;
     border-radius: 32px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    max-width: 100%;
+    height: auto;
+    max-width: 500px;
 }
 
 #app {
@@ -98,6 +102,9 @@ p {
     margin: 30px auto 0;
     position: relative;
     transition: transform 0.3s;
+}
+#searchBar:hover {
+    transform: scale(1.03);
 }
 
 #searchBar:focus-within {
@@ -181,6 +188,10 @@ p {
     padding: 3px;
     line-height: 0.3;
     display: flex;
+    transition: 0.5s;
+}
+#iamweather:hover {
+    transform: scale(1.1);
 }
 
 .weathertext {
@@ -205,6 +216,16 @@ p {
     #tabtext{
         position: relative;
         top: -100px;
+    }
+}
+
+@media (max-width: 790px) {
+    #timetext {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: fit-content;
+        margin: 20px auto 10px;
     }
 }
 
@@ -266,7 +287,7 @@ p {
     height: 24px;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(19, 255, 161, 0.75);
     color: white;
     cursor: pointer;
     opacity: 0;
@@ -319,6 +340,7 @@ p {
     border-radius: 25px;
     background: rgba(27, 104, 81, 0.85);
     backdrop-filter: blur(25px);
+    transition: 0.5s;
 }
 
 .quickLinkModContent h2 {
