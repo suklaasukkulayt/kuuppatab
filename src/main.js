@@ -258,7 +258,7 @@ function renderQuickLinks() {
         editButton.appendChild(editImage);
         editButton.className = "quickLinkEdit";
         editButton.type = "button";
-        editImage.src = "./assets/edit.png";
+        editImage.src = "./src/assets/edit.png";
         editImage.alt = "✏️";
         editButton.appendChild(editImage);
 
