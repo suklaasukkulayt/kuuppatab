@@ -1,5 +1,6 @@
 import "./style.css";
 import editIcon from "./assets/edit.png";
+
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
         navigator.serviceWorker.register("/kuuppatab/sw.js");
@@ -7,6 +8,72 @@ if ("serviceWorker" in navigator) {
 }
 
 const API_KEY = import.meta.env.VITE_NASA_API_KEY;
+const SETTINGS_KEY = "kuuppatab-settings";
+
+const defaultSettings = {
+  searchEngine: "google",
+  hideWeather: false,
+  hideNasa: false,
+  hideArrow: false
+};
+let settings = {
+  ...defaultSettings,
+  ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}")
+};
+let searchEngine = settings.searchEngine;
+
+function saveSettings() {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+}
+
+function applySettings() {
+  searchEngine = settings.searchEngine;
+  const weatherEl = document.querySelector("#iamweather");
+  if (weatherEl) weatherEl.hidden = settings.hideWeather;
+  const appEl = document.querySelector("#app");
+  if (appEl) appEl.hidden = settings.hideNasa;
+  document.body.classList.toggle("hide-arrow", settings.hideArrow);
+}
+
+
+
+document.querySelector("#settingsButton").addEventListener("click", () => {
+  const panel = document.querySelector("#settingsPanel");
+  if (panel) panel.hidden = !panel.hidden;
+});
+
+document.querySelector("#searchEngineSelect").addEventListener("change", (event) => {
+  settings.searchEngine = event.target.value;
+  saveSettings();
+  applySettings();
+});
+
+document.querySelector("#hideWeatherToggle").addEventListener("change", (event) => {
+  settings.hideWeather = event.target.checked;
+  saveSettings();
+  applySettings();
+  settingsCheck();
+});
+
+document.querySelector("#hideNasaToggle").addEventListener("change", (event) => {
+  settings.hideNasa = event.target.checked;
+  saveSettings();
+  applySettings();
+  settingsCheck();
+});
+
+document.querySelector("#hideArrowToggle").addEventListener("change", (event) => {
+  settings.hideArrow = event.target.checked;
+  saveSettings();
+  applySettings();
+});
+
+document.querySelector("#searchEngineSelect").value = settings.searchEngine;
+document.querySelector("#hideWeatherToggle").checked = settings.hideWeather;
+document.querySelector("#hideNasaToggle").checked = settings.hideNasa;
+document.querySelector("#hideArrowToggle").checked = settings.hideArrow;
+applySettings();
+settingsCheck();
 
 document.querySelector("#app").innerHTML = "<p>Nasa section intializing...</p>";
 
@@ -20,12 +87,12 @@ var currentTime = "";
     }
     setInterval(timeUpdate, 1000);
 
+if (!settings.hideNasa) {
 fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
 .then(response => response.json())
 .then(data => {
     timeUpdate();
     let media;
-    let backgroundUrl = data.url;
 
     if (data.media_type === "image") {
         media = `<img src="${data.url}" class="nasamedia"/>`;
@@ -41,7 +108,19 @@ fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
     ${media}
     <p id="nasadesc">${data.explanation}</p>
 `;
-})
+})}
+
+
+function settingsCheck() {
+if (settings.hideNasa) {
+    document.getElementById("app").style.display = "none";
+}
+
+if (settings.hideWeather) {
+    document.getElementById("iamweather").style.display = "none";
+} 
+}
+
 fetch(`https://images-api.nasa.gov/search?q=nebula&media_type=image&page_size=100`)
 .then(response => response.json())
 .then(async data => {
@@ -84,24 +163,21 @@ const images = data.collection.items
     document.querySelector("#app").innerHTML = `<p>Error: ${err.message}</p>`;
 });
 
+function doSearch(event) {
+  event.preventDefault();
+  const search = document.querySelector("#searchInput").value.trim();
+  if (!search) return;
 
-
-function doSearch(){
-    event.preventDefault()
-    const search = document.querySelector("#searchInput").value.trim()
-    if (search !== "") {
-        window.location.href =
-            `https://www.google.com/search?q=${encodeURIComponent(search)}`
-    }
+  const urls = {
+    google: `https://www.google.com/search?q=${encodeURIComponent(search)}`,
+    duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(search)}`,
+    bing: `https://www.bing.com/search?q=${encodeURIComponent(search)}`
+  };
+  window.location.href = urls[settings.searchEngine] || urls.google;
 }
 
-document.querySelector("#searchBar").addEventListener("submit", function(event) {
-    doSearch();
-})
-
-document.querySelector("#searchButton").addEventListener("click", () => {
-    doSearch();
-})
+document.querySelector("#searchBar").addEventListener("submit", doSearch);
+document.querySelector("#searchButton").addEventListener("click", doSearch);
 
 function weatherCodeToEmoji(code) {
   const weatherIcons = {
@@ -200,8 +276,10 @@ function getUserWeather() {
   );
 }
 
-getUserWeather();
-setInterval(getUserWeather, 10 * 60 * 1000);
+if (!settings.hideWeather) {
+  getUserWeather();
+  setInterval(getUserWeather, 10 * 60 * 1000);
+}
 
 const QUICK_LINKS_KEY = "kuuppatab-quick-links";
 let quickLinks = JSON.parse(

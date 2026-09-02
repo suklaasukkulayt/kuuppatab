@@ -10,6 +10,35 @@
     <title>New Tab</title>
   </head>
   <body>
+    <button id="settingsButton" aria-label="Settings button"></button>
+    
+  <div id="settingsPanel" class="settings-panel" hidden>
+    <label>
+      Search engine:
+      <select id="searchEngineSelect">
+        <option value="google">Google</option>
+        <option value="duckduckgo">DuckDuckGo</option>
+        <option value="bing">Bing</option>
+      </select>
+    </label>
+
+    <label>
+      <br>
+      <input id="hideWeatherToggle" type="checkbox" />
+      Hide weather
+    </label>
+
+    <label>
+      <input id="hideNasaToggle" type="checkbox" />
+      Hide NASA
+    </label>
+
+    <label>
+      <input id="hideArrowToggle" type="checkbox" />
+      Hide red arrow
+    </label>
+</div>
+
     <div id="newtab">
       <h3 id="timetext"></h3>
       <div id="iamweather">
