@@ -3,7 +3,7 @@ import editIcon from "./assets/edit.png";
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/kuuppatab/sw.js");
+        navigator.serviceWorker.register("/sw.js");
     });
 }
 

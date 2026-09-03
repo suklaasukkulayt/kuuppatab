@@ -1,8 +1,8 @@
-const CACHE_NAME = "kuuppatab-v3.0";
+const CACHE_NAME = "kuuppatab-v3.0.1";
 
 const STATIC_FILES = [
-    "/kuuppatab/",
-    "/kuuppatab/index.html",
+    "/",
+    "/index.html",
 ];
 
 self.addEventListener("install", event => {
