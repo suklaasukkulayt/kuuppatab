@@ -10,7 +10,7 @@ A funny red arrow for no reason
 Weather and a clock  
 Caching to make the site load faster
 A cool UI  
-Hover animations
+Hover animations  
 A customization menu that you can use to:  
 Change your search engine  
 Hide weather, Nasa APOD section and the funny red arrow  
