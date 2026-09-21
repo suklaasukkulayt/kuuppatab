@@ -142,21 +142,42 @@ const images = data.collection.items
         throw new Error("No NASA images found.");
     }
         const day = Math.floor(Date.now() / 86400000);
-        const imageIndex = day % images.length;
-        const selectedImage = images[imageIndex];
-        const assetResponse = await fetch(
-    `https://images-api.nasa.gov/asset/${selectedImage.id}`
-);
+        let imageIndex = day % images.length;
+        let selectedImage = images[imageIndex];
+        let checked = 0;
+
+while (checked < images.length) {
+    const assetResponse = await fetch(
+        `https://images-api.nasa.gov/asset/${selectedImage.id}`
+    );
     const assetData = await assetResponse.json();
     const originalImage = assetData.collection.items.find(
         item => item.href.includes("~orig")
-);
+    );
 
-    if (!originalImage) {
-        throw new Error("Original NASA image not found.");
+    if (originalImage) {
+        const img = new Image();
+        img.src = originalImage.href;
+
+        await new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+        });
+
+        if (img.naturalHeight >= 720) {
+            selectedImage.url = originalImage.href;
+            break;
+        }
+    }
+
+    checked++;
+    imageIndex = (imageIndex + 1) % images.length;
+    selectedImage = images[imageIndex];
 }
 
-    selectedImage.url = originalImage.href;
+    if (!selectedImage.url) {
+    throw new Error("No NASA image with at least 720px height found.");
+}
     document.body.style.backgroundImage = `url("${selectedImage.url}")`;
 })
 .catch(err => {
