@@ -88,7 +88,7 @@ var currentTime = "";
     setInterval(timeUpdate, 1000);
 
 if (!settings.hideNasa) {
-fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`)
+fetch(`https://science.nasa.gov/planetary/apod?api_key=${API_KEY}`)
 .then(response => response.json())
 .then(data => {
     timeUpdate();
