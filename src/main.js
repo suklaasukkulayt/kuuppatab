@@ -432,7 +432,7 @@ document
     .addEventListener("click", () => {
         const name = document.querySelector("#quickLinkName").value.trim();
         let url = document.querySelector("#quickLinkUrl").value.trim();
-        const doesUrlInclude = url.includes("https:");
+        const doesUrlInclude = url.includes("http");
         if (!doesUrlInclude){
             url = "https://" + document.querySelector("#quickLinkUrl").value.trim();
         }
