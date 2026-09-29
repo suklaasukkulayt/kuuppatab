@@ -431,7 +431,12 @@ document
     .querySelector("#quickLinkSave")
     .addEventListener("click", () => {
         const name = document.querySelector("#quickLinkName").value.trim();
-        const url = document.querySelector("#quickLinkUrl").value.trim();
+        let url = document.querySelector("#quickLinkUrl").value.trim();
+        const doesUrlInclude = url.includes("https:");
+        if (!doesUrlInclude){
+            url = "https://" + document.querySelector("#quickLinkUrl").value.trim();
+        }
+        
         const icon = document.querySelector("#quickLinkIcon").value.trim();
         if (!name || !url) {
             return;
